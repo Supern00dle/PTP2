@@ -1,57 +1,69 @@
 package Aufgabe1_1;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * @author Manuel Scholz, Leo Peters
  *
  */
-public class Student implements Comparable<Student> {
+public class Student implements Comparable<Student>, Comparator<Object>{
   private String vorname;
   private String nachname;
   private int matrikelnummer;
-  private Pruefungsleistung[] pruefungsleistungen;
+  private List<Pruefungsleistung> leistungen;
 
   /**
+   * @param matrikelnummer
    * 
    */
-  public Student(String vorname, String nachname, int Matrikelnummer) {
+  public Student(String vorname, String nachname, int matrikelnummer) {
     this.vorname = vorname;
     this.nachname = nachname;
     this.matrikelnummer = matrikelnummer;
-    pruefungsleistungen = null;
-    // TODO Auto-generated constructor stub
-
+    leistungen = new ArrayList<>();
   }
 
   /**
-   * @return the vorname
+   * @return Der Vorname des Students
    */
   public String getVorname() {
     return vorname;
   }
 
   /**
-   * @return the nachname
+   * @return Der Nachname des Students
    */
   public String getNachname() {
     return nachname;
   }
 
   /**
-   * @return the matrikelnummer
+   * @return Die Matrikelnummer des Students
    */
   public int getMatrikelnummer() {
     return matrikelnummer;
   }
 
-  /*
-   * (non-Javadoc)
+  /**
+   * Vergleicht diesen Studenten mit einem anderen Objekt, vorzugsweise einem
+   * Student. Studenten sind gleich, wenn sie die gleiche Matrikelnummer haben.
    * 
-   * @see java.lang.Object#equals()
+   * @param obj
+   *          das zu vergleichende Objekt
+   * 
+   * @return true wenn gleicher Student
    */
   @Override
   public boolean equals(Object obj) {
+
+    if (obj.getClass().equals(this)) {
+      Student andererStudent = (Student) obj;
+      if (andererStudent.getMatrikelnummer() == this.getMatrikelnummer()) {
+        return true;
+      }
+    }
     return false;
 
   }
@@ -67,7 +79,7 @@ public class Student implements Comparable<Student> {
     int result = 1;
     result = prime * result + matrikelnummer;
     result = prime * result + ((nachname == null) ? 0 : nachname.hashCode());
-    result = prime * result + ((pruefungsleistungen == null) ? 0 : pruefungsleistungen.hashCode());
+    result = prime * result + ((leistungen == null) ? 0 : leistungen.hashCode());
     result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
     return result;
   }
@@ -79,14 +91,41 @@ public class Student implements Comparable<Student> {
    */
   @Override
   public int compareTo(Student o) {
-    
-    //Wirf nullpointer wenn anderes Object null, 
-    //http://openbook.rheinwerk-verlag.de/javainsel/javainsel_08_001.html
-    if(o == null)
-    {
+
+    // Wirf nullpointer wenn anderes Object null,
+    // http://openbook.rheinwerk-verlag.de/javainsel/javainsel_08_001.html
+    if (o == null) {
       throw new NullPointerException();
     }
+    if(o.equals(this))
+    {
+      return 0; 
+    }
+    else if(o.getMatrikelnummer() > this.getMatrikelnummer())
+    {
+      return o.getMatrikelnummer() - this.getMatrikelnummer();
+    }
+    else
+    {
+      return this.getMatrikelnummer() - o.getMatrikelnummer();
+    }
     
+  }
+  /**
+   * Fuegt der Liste von Pruefungsleistungen eine Leistung hinzu
+   * 
+   * @param pruefungsleistung
+   */
+  public void addPruefungsleistung(Pruefungsleistung pruefungsleistung) {
+    leistungen.add(pruefungsleistung);
+  }
+
+  /* (non-Javadoc)
+   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+   */
+  @Override
+  public int compare(Object o1, Object o2) {
+    // TODO Auto-generated method stub
     return 0;
   }
 }

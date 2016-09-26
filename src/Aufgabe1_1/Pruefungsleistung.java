@@ -5,37 +5,53 @@ package Aufgabe1_1;
  */
 public class Pruefungsleistung {
 
-  private String modul;
-  private double Note;
+  private final String modul;
+  private final double note;
+
   /**
+   * Konstruktor der Klasse Pruefungsleistung
    * 
+   * @param modul
+   *          Der Name des Moduls
+   * 
+   * @param note
+   *          Die Note des Moduls
    */
-  public Pruefungsleistung() {
-    // TODO Auto-generated constructor stub
+  public Pruefungsleistung(String modul, double note) {
+    this.modul = modul;
+    this.note = note;
   }
+
   /**
    * @return Gibt den Modulnamen zurueck.
    */
   public String getModul() {
     return modul;
   }
-  /**
-   * @param Setzt den Modulnamen.
-   */
-  public void setModul(String modul) {
-    this.modul = modul;
-  }
+
   /**
    * @return Gibt die Note zurueck.
    */
   public double getNote() {
-    return Note;
-  }
-  /**
-   * @param Setzt die Note.
-   */
-  public void setNote(double note) {
-    Note = note;
+    return note;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals()
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (obj.getClass() != this.getClass()) {
+
+      Pruefungsleistung andereLeistung = (Pruefungsleistung) obj;
+      if (andereLeistung.getModul().equals(this.getModul()) 
+          && andereLeistung.getNote() == this.getNote()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
