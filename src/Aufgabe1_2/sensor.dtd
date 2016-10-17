@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT sensor (Messung)*>
+<!ATTLIST sensor id CDATA #REQUIRED>
+<!ELEMENT Messung EMPTY>
+<!ATTLIST Messung wert CDATA #IMPLIED zeitstempel CDATA #IMPLIED>
+
