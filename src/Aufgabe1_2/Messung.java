@@ -83,4 +83,16 @@ public class Messung {
    return wert + " " + zeitstempel.toString(); 
   }
   
+  public double getWert()
+  {
+    return wert;
+    
+  }
+  
+  public String getZeitstempel()
+  {
+    
+    return zeitstempel.toString();
+  }
+  
 }

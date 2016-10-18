@@ -41,10 +41,15 @@ public class Sensor {
     this.id = sensorID;
   }
   
-  public void importMessungen()
+  public Messung getMessung(int i)
+  {
+    return messungen.get(i);
+  }
+  
+  public int getAnzahlMessungen()
   {
     
-    
+    return messungen.size();
   }
   
 
