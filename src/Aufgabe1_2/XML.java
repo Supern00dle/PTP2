@@ -22,7 +22,6 @@ public class XML {
     File xmlFilePath = new File("src/Aufgabe1_2/sensor.xml");
 
     XML xml = new XML();
-    xml.init();
     try {
       xml.importSensor(xmlFilePath);
     } catch (Exception e) {
@@ -41,10 +40,20 @@ public class XML {
 
   }
 
-  public void init() {
+  /**
+   * Konstruktor der Klasse XML
+   */
+  public XML() {
     sensoren = new ArrayList<Sensor>();
   }
 
+  /**
+   * Importiert eine XML Datei voll Sensoren
+   * 
+   * @param XMLtoImport
+   *          die XML Datei zum importieren
+   * @throws Exception
+   */
   public void importSensor(File XMLtoImport) throws Exception {
     Sensor neuerSensor;
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -66,21 +75,29 @@ public class XML {
 
   }
 
+  /**
+   * Exportiert das Objekt Sensor mit allen seinen Messwerten.
+   * 
+   * @param sensor
+   *          Der zu exportierende Sensor
+   * @param datei
+   *          Die Zieldatei
+   * @throws Exception
+   */
   public void exportSensor(Sensor sensor, File datei) throws Exception {
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
     Document doc = docBuilder.newDocument();
     Element rootElement = doc.createElement("Sensor");
     rootElement.setAttribute("id", "Export");
-    for(int i = 0; i < this.sensoren.get(0).getAnzahlMessungen(); i++)
-    {
+    for (int i = 0; i < this.sensoren.get(0).getAnzahlMessungen(); i++) {
       Messung m = this.sensoren.get(0).getMessung(i);
       Element messung = doc.createElement("Messung");
-      messung.setAttribute("wert", m.getWert()+"");
+      messung.setAttribute("wert", m.getWert() + "");
       messung.setAttribute("zeitstempel", m.getZeitstempel());
       rootElement.appendChild(messung);
     }
-    
+
     doc.appendChild(rootElement);
 
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
