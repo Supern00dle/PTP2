@@ -4,6 +4,7 @@ package Aufgabe1_2;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.text.DocumentFilter;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
@@ -85,11 +86,20 @@ public class XML {
    * @throws Exception
    */
   public void exportSensor(Sensor sensor, File datei) throws Exception {
+    //Erstelle eine DocumentBuilderFactory
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
     Document doc = docBuilder.newDocument();
     
-    //fuege den Sensor hinzu
+    //Erstelle den Doctype
+    DOMImplementation domImpl = doc.getImplementation();
+    DocumentType doctype = domImpl.createDocumentType("Sensor",
+        "SYSTEM",
+        "sensor.dtd");
+    System.out.println(doctype.toString());
+    doc.appendChild(doctype);
+ 
+    //Erstelle den Sensor
     Element rootElement = doc.createElement("Sensor");
     rootElement.setAttribute("id", "Export");
     
@@ -102,12 +112,13 @@ public class XML {
       rootElement.appendChild(messung);
     }
     
-    //Fuege alles zum Dokument hinzu
+    //Fuege Sensor zum Dokument hinzu
     doc.appendChild(rootElement);
 
-    //Transformiere das Objekt in eine XML
+    //Schreibe das Dokument in eine Datei
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
+    transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "sensor.dtd");
     DOMSource source = new DOMSource(doc);
     StreamResult result = new StreamResult(datei);
     transformer.transform(source, result);

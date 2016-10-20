@@ -1,1 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Sensor id="Export"><Messung wert="23.2" zeitstempel="2016-06-23T16:51:40.408"/><Messung wert="24.5" zeitstempel="2016-06-24T12:12:52"/></Sensor>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE Sensor SYSTEM "sensor.dtd">
+<Sensor id="Export">
+	<Messung wert="23.2" zeitstempel="2016-06-23T16:51:40.408" />
+	<Messung wert="24.5" zeitstempel="2016-06-24T12:12:52" />
+</Sensor>
