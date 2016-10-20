@@ -1,4 +1,7 @@
-
+/** PTP2 Praktikum 1
+ * 20.10.2016
+ * Manuel Scholz, Leo Peters
+ */
 package Aufgabe1_2;
 
 import java.io.File;
@@ -11,10 +14,6 @@ import javax.xml.transform.stream.*;
 
 import org.w3c.dom.*;
 
-/**
- * @author Manuel Scholz, Leo Peters
- * 
- */
 public class XML {
   ArrayList<Sensor> sensoren;
 

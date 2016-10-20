@@ -55,6 +55,7 @@ public class Pruefungsleistung {
   /**
    * Gibt das Objekt als String zurueck.
    */
+  @Override
   public String toString() {
 	  String toString = "Modul: " + modul + "\nNote: " + note;
 	  return toString;
