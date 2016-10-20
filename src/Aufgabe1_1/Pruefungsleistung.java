@@ -1,8 +1,8 @@
-package Aufgabe1_1;
-
-/**
+/**PTP2 Praktikum 1
+ * 20.10.2016
  * @author Manuel Scholz, Leo Peters
  */
+package Aufgabe1_1;
 public class Pruefungsleistung {
 
   private final String modul;
@@ -43,15 +43,18 @@ public class Pruefungsleistung {
    */
   @Override
   public boolean equals(Object obj) {
-    if (obj.getClass() != this.getClass()) {
-
+    if (obj.getClass() == this.getClass()) {
       Pruefungsleistung andereLeistung = (Pruefungsleistung) obj;
       if (andereLeistung.getModul().equals(this.getModul()) 
           && andereLeistung.getNote() == this.getNote()) {
         return true;
       }
     }
-
     return false;
+  }
+  
+  public String toString() {
+	  String toString = "Modul: " + modul + "\nNote: " + note;
+	  return toString;
   }
 }

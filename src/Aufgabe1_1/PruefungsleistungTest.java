@@ -1,12 +1,10 @@
-/**
- * 
+/** PTP2 Praktikum 1
+ * 20.10.2016
+ * @author Manuel Scholz, Leo Peters
  */
 package Aufgabe1_1;
 
-import org.junit.Assert.*;
-
 import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -55,7 +53,8 @@ public class PruefungsleistungTest {
   public final void testPruefungsleistung() {
     Pruefungsleistung leistung1 = new Pruefungsleistung("Fach", 1.1);
     Pruefungsleistung leistung2 = new Pruefungsleistung("Fach", 1.1);
-    assertEquals(leistung1, leistung2);    
+    assertEquals(leistung1, leistung2);
+    
   }
 
   /**
@@ -65,8 +64,7 @@ public class PruefungsleistungTest {
   public final void testGetModul() {
     Pruefungsleistung leistung1 = new Pruefungsleistung("Fach", 1.1);
     Pruefungsleistung leistung2 = new Pruefungsleistung("Fach", 1.1);
-    assertEquals(leistung1.getModul(), leistung2.getModul()); 
-    
+    assertEquals(leistung1.getModul(), leistung2.getModul());   
     Pruefungsleistung leistung3 = new Pruefungsleistung("AnderesFach", 1.1);
     assertNotEquals(leistung1.getModul(), leistung3.getModul()); 
   }
@@ -79,9 +77,8 @@ public class PruefungsleistungTest {
     Pruefungsleistung leistung1 = new Pruefungsleistung("Fach", 1.1);
     Pruefungsleistung leistung2 = new Pruefungsleistung("Fach", 1.1);
     assertEquals(leistung1.getNote(), leistung2.getNote(), 0); 
-    
     Pruefungsleistung leistung3 = new Pruefungsleistung("AnderesFach", 1.3);
-    assertEquals(leistung1.getNote(), leistung3.getNote(), 0); 
+    assertNotEquals(leistung3.getNote(), leistung1.getNote(), 0); 
      }
 
   /**
@@ -89,15 +86,20 @@ public class PruefungsleistungTest {
    */
   @Test
   public final void testEquals() {
-    fail("Not yet implemented"); // TODO
-  }
+	  Pruefungsleistung leistung1 = new Pruefungsleistung("PM2", 1.1);
+	  Pruefungsleistung leistung2 = new Pruefungsleistung("PM2", 1.1);
+	  Pruefungsleistung leistung3 = new Pruefungsleistung("PM1", 1.4);
+	  assertEquals(leistung1.equals(leistung2), true);
+	  assertEquals(leistung3.equals(leistung1), false);
+	  }
 
   /**
    * Test method for {@link java.lang.Object#toString()}.
    */
   @Test
   public final void testToString() {
-    fail("Not yet implemented"); // TODO
+	Pruefungsleistung leistung1 = new Pruefungsleistung("PM2", 1.1);
+	assertEquals(leistung1.toString(), "Modul: PM2\nNote: 1.1");
   }
 
 }
