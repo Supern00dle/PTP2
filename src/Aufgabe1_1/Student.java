@@ -140,6 +140,7 @@ public class Student implements Comparable<Student>, Comparator<String> {
 	  /**
 	   * Gibt das Objekt als String zurueck.
 	   */
+	@Override
 	public String toString() {
 		String toString = "Student: " + vorname + " " + nachname + "\nMatrikelnummer: " + matrikelnummer + "\n";
 		for (int i = 0; i < leistungen.size(); i++) {

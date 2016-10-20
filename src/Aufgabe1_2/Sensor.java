@@ -1,14 +1,12 @@
-/**
- * 
+/** PTP2 Praktikum 1
+ * 20.10.2016
+ * Manuel Scholz, Leo Peters
  */
 package Aufgabe1_2;
 
 import java.util.ArrayList;
 
-/**
- * @author Manuel Scholz
- *
- */
+
 public class Sensor {
 
   private String id;
