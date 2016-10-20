@@ -4,7 +4,6 @@ package Aufgabe1_2;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.text.DocumentFilter;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
