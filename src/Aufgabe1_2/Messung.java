@@ -80,7 +80,6 @@ public class Messung {
 	 * Getter für den Zeitstempel
 	 */
 	public String getZeitstempel() {
-
 		return zeitstempel.toString();
 	}
 	
