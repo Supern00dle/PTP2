@@ -88,8 +88,12 @@ public class XML {
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
     Document doc = docBuilder.newDocument();
+    
+    //fuege den Sensor hinzu
     Element rootElement = doc.createElement("Sensor");
     rootElement.setAttribute("id", "Export");
+    
+    //fuege die Messungen hinzu
     for (int i = 0; i < this.sensoren.get(0).getAnzahlMessungen(); i++) {
       Messung m = this.sensoren.get(0).getMessung(i);
       Element messung = doc.createElement("Messung");
@@ -97,9 +101,11 @@ public class XML {
       messung.setAttribute("zeitstempel", m.getZeitstempel());
       rootElement.appendChild(messung);
     }
-
+    
+    //Fuege alles zum Dokument hinzu
     doc.appendChild(rootElement);
 
+    //Transformiere das Objekt in eine XML
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
     DOMSource source = new DOMSource(doc);
