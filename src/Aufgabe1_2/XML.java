@@ -87,14 +87,6 @@ public class XML {
     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
     Document doc = docBuilder.newDocument();
     
-    //Erstelle den Doctype
-    DOMImplementation domImpl = doc.getImplementation();
-    DocumentType doctype = domImpl.createDocumentType("Sensor",
-        "SYSTEM",
-        "sensor.dtd");
-    System.out.println(doctype.toString());
-    doc.appendChild(doctype);
- 
     //Erstelle den Sensor
     Element rootElement = doc.createElement("Sensor");
     rootElement.setAttribute("id", "Export");
