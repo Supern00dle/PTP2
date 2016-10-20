@@ -9,7 +9,7 @@ package Aufgabe1_3;
  */
 public class ArrayListe<T> {
 
-  int anzahlElemente;
+  private int anzahlElemente;
   private Object[] elemente;
 
   /**
@@ -27,22 +27,7 @@ public class ArrayListe<T> {
    *          T entspricht, wird eine exception geworfen.
    */
   public void hinzufuegen(T object) {
-    int freierPlatz = -1;
-    for (int i = 0; i < elemente.length; i++) {
-      if (elemente[i] == null) {
-        freierPlatz = i;
-        break;
-      }
-    }
-
-    // Wenn kein freier Platz vorhanden ist, erhöhe den Platz und fang von vorne
-    // an.
-    if (freierPlatz == -1) {
-      erhoeheArrayGroesse();
-      hinzufuegen(object);
-      return;
-    }
-    elemente[freierPlatz] = object;
+    elemente[getFreierPlatz()] = object;
     anzahlElemente++;
   }
 
@@ -63,10 +48,13 @@ public class ArrayListe<T> {
    * 
    * @param i
    *          Die angefragte Position
-   * @return Das Objekt an Position i. Wenn kein Objekt an der Stelle, ist die
-   *         rückgabe null!
+   * @return Das Objekt an Position i. Wenn kein Objekt an der Stelle ist, oder
+   *         i nichtmehr im Array ist, ist die rückgabe null!
    */
   public T get(int i) {
+    if (i > elemente.length) {
+      return null;
+    }
     return (T) elemente[i];
   }
 
@@ -84,11 +72,29 @@ public class ArrayListe<T> {
 
     for (int i = 0; i < elemente.length; i++) {
       if (elemente[i].equals(object)) {
+        // Element rausloeschen
         elemente[i] = null;
         anzahlElemente--;
       }
     }
+    //raeume das Array zum schluss auf
+    schiebeArrayAuf();
 
+  }
+
+  /**
+   * Gibt die Position des letzten Elements im Array zurueck.
+   * 
+   * @return Die Position des letzten Elements
+   */
+  private int getLetztesObjekt() {
+    int posLetztesElement = -1;
+    for (int i = 0; i < elemente.length; i++) {
+      if (elemente[i] != null) {
+        posLetztesElement = i;
+      }
+    }
+    return posLetztesElement;
   }
 
   /**
@@ -101,7 +107,58 @@ public class ArrayListe<T> {
     if (i >= 0 && i < elemente.length) {
       elemente[i] = null;
     }
+    
+    //raeume das Array zum schluss auf
+    schiebeArrayAuf();
 
+  }
+
+  /**
+   * Diese Funktion schiebt alle Objekte im Array nach vorne
+   */
+  private void schiebeArrayAuf() {
+    // check ob Array geordnet ist
+    int objektCounter = 0;
+    boolean geordnet = true;
+
+    for (int i = 0; i < elemente.length; i++) {
+      if (elemente[i] != null) {
+        objektCounter++;
+      } else if (objektCounter < anzahlElemente) {
+        geordnet = false;
+      }
+    }
+
+    if (!geordnet) {
+      while (getLetztesObjekt() != getFreierPlatz()) {
+        int letztesObjekt = getLetztesObjekt();
+        elemente[getFreierPlatz()] = elemente[letztesObjekt];
+        elemente[letztesObjekt] = null;
+      }
+    }
+
+  }
+
+  /**
+   * Gibt einen freien Platz im Array zurueck. Falls das Array voll ist, wird
+   * automatisch die Funktion erhoeheArrayGroesse() aufgerufen.
+   * 
+   * @return ein freier Platz im Array.
+   */
+  private int getFreierPlatz() {
+    int freierPlatz = -1;
+    for (int i = 0; i < elemente.length; i++) {
+      if (elemente[i] == null) {
+        freierPlatz = i;
+        break;
+      }
+    }
+    if (freierPlatz == -1) {
+      erhoeheArrayGroesse();
+      freierPlatz = getFreierPlatz();
+    }
+
+    return freierPlatz;
   }
 
   /**
