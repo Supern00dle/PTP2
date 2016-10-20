@@ -52,7 +52,9 @@ public class Pruefungsleistung {
     }
     return false;
   }
-  
+  /**
+   * Gibt das Objekt als String zurueck.
+   */
   public String toString() {
 	  String toString = "Modul: " + modul + "\nNote: " + note;
 	  return toString;

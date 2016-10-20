@@ -1,13 +1,13 @@
+/** PTP2 Praktikum 1
+ * 20.10.2016
+ * @author Manuel Scholz, Leo Peters
+ */
 package Aufgabe1_1;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-/**
- * @author Manuel Scholz, Leo Peters
- *
- */
+	
 public class Student implements Comparable<Student>, Comparator<Object> {
 	private String vorname;
 	private String nachname;
@@ -15,8 +15,14 @@ public class Student implements Comparable<Student>, Comparator<Object> {
 	private List<Pruefungsleistung> leistungen;
 
 	/**
-	 * @param matrikelnummer
+	 * Konstruktor der Klasse Student
 	 * 
+	 * @param vorname
+	 * 				Vorname des Studenten
+	 * @param nachname
+	 * 				Nachname des Studenten
+	 * @param matrikelnummer
+	 * 				Die Matrikelnummer des Studenten	 * 
 	 */
 	public Student(String vorname, String nachname, int matrikelnummer) {
 		this.vorname = vorname;
@@ -59,7 +65,7 @@ public class Student implements Comparable<Student>, Comparator<Object> {
 	@Override
 	public boolean equals(Object obj) {
 
-		if (obj.getClass().equals(this)) {
+		if (obj.getClass().equals(this.getClass())) {
 			Student andererStudent = (Student) obj;
 			if (andererStudent.getMatrikelnummer() == this.getMatrikelnummer()) {
 				return true;
@@ -124,10 +130,22 @@ public class Student implements Comparable<Student>, Comparator<Object> {
 	 */
 	@Override
 	public int compare(Object o1, Object o2) {
-		// TODO Auto-generated method stub
-		return 0;
+		// Wirft NullpointerException wenn ein Objekt null
+		if(o1 == null || o2 == null) {
+			throw new NullPointerException();
+		}
+		if (o1.getClass() == this.getClass() && o2.getClass() == this.getClass()) {
+			o1 = (Student)o1;
+			o2 = (Student)o2;
+		}
+		else {
+			throw new NullPointerException();
+		}
+		return ((Student)o1).compareTo(((Student)o2));
 	}
-
+	  /**
+	   * Gibt das Objekt als String zurueck.
+	   */
 	public String toString() {
 		String toString = "Student: " + vorname + " " + nachname + "\nMatrikelnummer: " + matrikelnummer + "\n";
 		for (int i = 0; i < leistungen.size(); i++) {
@@ -135,10 +153,4 @@ public class Student implements Comparable<Student>, Comparator<Object> {
 		}
 		return toString;
 	}
-//	public static void main(String[] args) {
-//		Student student = new Student("Leo", "Peters", 123456);
-//		Pruefungsleistung pruefungsleistung = new Pruefungsleistung("PM2", 3.0);
-//		student.addPruefungsleistung(pruefungsleistung);
-//		System.out.println(student);
-//	}
 }
