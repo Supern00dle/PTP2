@@ -22,6 +22,7 @@ public class Generics {
    * @param t die ArrayListe die ueberprueft werden soll.
    * @return True wenn das erste Objekt eine Zahl ist.
    */
+  @SuppressWarnings("rawtypes")
   public static boolean pruefeObErstesObjektZahlIst(ArrayListe<?> t) {
     if (t.getAnzahlElemente() > 0) {
       Class c = t.get(0).getClass();
