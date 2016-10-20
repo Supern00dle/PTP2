@@ -24,7 +24,6 @@ public class XML {
     try {
       xml.importSensor(xmlFilePath);
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     System.out.println("");
@@ -33,7 +32,6 @@ public class XML {
       xml.exportSensor(xml.sensoren.get(0), new File("src/Aufgabe1_2/Export.xml"));
 
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
