@@ -8,124 +8,137 @@ import java.util.List;
  * @author Manuel Scholz, Leo Peters
  *
  */
-public class Student implements Comparable<Student>, Comparator<Object>{
-  private String vorname;
-  private String nachname;
-  private int matrikelnummer;
-  private List<Pruefungsleistung> leistungen;
+public class Student implements Comparable<Student>, Comparator<Object> {
+	private String vorname;
+	private String nachname;
+	private int matrikelnummer;
+	private List<Pruefungsleistung> leistungen;
 
-  /**
-   * @param matrikelnummer
-   * 
-   */
-  public Student(String vorname, String nachname, int matrikelnummer) {
-    this.vorname = vorname;
-    this.nachname = nachname;
-    this.matrikelnummer = matrikelnummer;
-    leistungen = new ArrayList<>();
-  }
+	/**
+	 * @param matrikelnummer
+	 * 
+	 */
+	public Student(String vorname, String nachname, int matrikelnummer) {
+		this.vorname = vorname;
+		this.nachname = nachname;
+		this.matrikelnummer = matrikelnummer;
+		leistungen = new ArrayList<>();
+	}
 
-  /**
-   * @return Der Vorname des Students
-   */
-  public String getVorname() {
-    return vorname;
-  }
+	/**
+	 * @return Der Vorname des Students
+	 */
+	public String getVorname() {
+		return vorname;
+	}
 
-  /**
-   * @return Der Nachname des Students
-   */
-  public String getNachname() {
-    return nachname;
-  }
+	/**
+	 * @return Der Nachname des Students
+	 */
+	public String getNachname() {
+		return nachname;
+	}
 
-  /**
-   * @return Die Matrikelnummer des Students
-   */
-  public int getMatrikelnummer() {
-    return matrikelnummer;
-  }
+	/**
+	 * @return Die Matrikelnummer des Students
+	 */
+	public int getMatrikelnummer() {
+		return matrikelnummer;
+	}
 
-  /**
-   * Vergleicht diesen Studenten mit einem anderen Objekt, vorzugsweise einem
-   * Student. Studenten sind gleich, wenn sie die gleiche Matrikelnummer haben.
-   * 
-   * @param obj
-   *          das zu vergleichende Objekt
-   * 
-   * @return true wenn gleicher Student
-   */
-  @Override
-  public boolean equals(Object obj) {
+	/**
+	 * Vergleicht diesen Studenten mit einem anderen Objekt, vorzugsweise einem
+	 * Student. Studenten sind gleich, wenn sie die gleiche Matrikelnummer
+	 * haben.
+	 * 
+	 * @param obj
+	 *            das zu vergleichende Objekt
+	 * 
+	 * @return true wenn gleicher Student
+	 */
+	@Override
+	public boolean equals(Object obj) {
 
-    if (obj.getClass().equals(this)) {
-      Student andererStudent = (Student) obj;
-      if (andererStudent.getMatrikelnummer() == this.getMatrikelnummer()) {
-        return true;
-      }
-    }
-    return false;
+		if (obj.getClass().equals(this)) {
+			Student andererStudent = (Student) obj;
+			if (andererStudent.getMatrikelnummer() == this.getMatrikelnummer()) {
+				return true;
+			}
+		}
+		return false;
 
-  }
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + matrikelnummer;
-    result = prime * result + ((nachname == null) ? 0 : nachname.hashCode());
-    result = prime * result + ((leistungen == null) ? 0 : leistungen.hashCode());
-    result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
-    return result;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + matrikelnummer;
+		result = prime * result + ((nachname == null) ? 0 : nachname.hashCode());
+		result = prime * result + ((leistungen == null) ? 0 : leistungen.hashCode());
+		result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
+		return result;
+	}
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Comparable#compareTo(java.lang.Object)
-   */
-  @Override
-  public int compareTo(Student o) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Student o) {
 
-    // Wirf nullpointer wenn anderes Object null,
-    // http://openbook.rheinwerk-verlag.de/javainsel/javainsel_08_001.html
-    if (o == null) {
-      throw new NullPointerException();
-    }
-    if(o.equals(this))
-    {
-      return 0; 
-    }
-    else if(o.getMatrikelnummer() > this.getMatrikelnummer())
-    {
-      return o.getMatrikelnummer() - this.getMatrikelnummer();
-    }
-    else
-    {
-      return this.getMatrikelnummer() - o.getMatrikelnummer();
-    }
-    
-  }
-  /**
-   * Fuegt der Liste von Pruefungsleistungen eine Leistung hinzu
-   * 
-   * @param pruefungsleistung
-   */
-  public void addPruefungsleistung(Pruefungsleistung pruefungsleistung) {
-    leistungen.add(pruefungsleistung);
-  }
+		// Wirf nullpointer wenn anderes Object null,
+		// http://openbook.rheinwerk-verlag.de/javainsel/javainsel_08_001.html
+		if (o == null) {
+			throw new NullPointerException();
+		}
+		if (o.equals(this)) {
+			return 0;
+		} else if (o.getMatrikelnummer() > this.getMatrikelnummer()) {
+			return o.getMatrikelnummer() - this.getMatrikelnummer();
+		} else {
+			return this.getMatrikelnummer() - o.getMatrikelnummer();
+		}
 
-  /* (non-Javadoc)
-   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-   */
-  @Override
-  public int compare(Object o1, Object o2) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+	}
+
+	/**
+	 * Fuegt der Liste von Pruefungsleistungen eine Leistung hinzu
+	 * 
+	 * @param pruefungsleistung
+	 */
+	public void addPruefungsleistung(Pruefungsleistung pruefungsleistung) {
+		leistungen.add(pruefungsleistung);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
+	@Override
+	public int compare(Object o1, Object o2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public String toString() {
+		String toString = "Student: " + vorname + " " + nachname + "\nMatrikelnummer: " + matrikelnummer + "\n";
+		for (int i = 0; i < leistungen.size(); i++) {
+			toString += leistungen.get(i).toString();
+		}
+		return toString;
+	}
+//	public static void main(String[] args) {
+//		Student student = new Student("Leo", "Peters", 123456);
+//		Pruefungsleistung pruefungsleistung = new Pruefungsleistung("PM2", 3.0);
+//		student.addPruefungsleistung(pruefungsleistung);
+//		System.out.println(student);
+//	}
 }
