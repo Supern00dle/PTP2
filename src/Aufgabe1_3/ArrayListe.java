@@ -51,6 +51,7 @@ public class ArrayListe<T> {
    * @return Das Objekt an Position i. Wenn kein Objekt an der Stelle ist, oder
    *         i nichtmehr im Array ist, ist die rückgabe null!
    */
+  @SuppressWarnings("unchecked")
   public T get(int i) {
     if (i > elemente.length) {
       return null;
