@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 	
-public class Student implements Comparable<Student>, Comparator<String> {
+public class Student implements Comparable<Student>, Comparator<Object> {
 	private String vorname;
 	private String nachname;
 	private int matrikelnummer;
@@ -129,13 +129,19 @@ public class Student implements Comparable<Student>, Comparator<String> {
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public int compare(String o1, String o2) {
+	public int compare(Object o1, Object o2) {
 		// Wirft NullpointerException wenn ein Objekt null
 		if(o1 == null || o2 == null) {
 			throw new NullPointerException();
 		}
-		
-		return o1.compareTo(o2);
+		if (o1.getClass() == this.getClass() && o2.getClass() == this.getClass()) {
+			o1 = (Student)o1;
+			o2 = (Student)o2;
+		}
+		else {
+			throw new NullPointerException();
+		}
+		return ((Student)o1).compareTo(((Student)o2));
 	}
 	  /**
 	   * Gibt das Objekt als String zurueck.
