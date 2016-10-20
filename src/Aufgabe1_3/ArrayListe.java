@@ -72,7 +72,7 @@ public class ArrayListe<T> {
     }
 
     for (int i = 0; i < elemente.length; i++) {
-      if (elemente[i].equals(object)) {
+      if (elemente[i] != null && elemente[i].equals(object)) {
         // Element rausloeschen
         elemente[i] = null;
         anzahlElemente--;
@@ -131,7 +131,7 @@ public class ArrayListe<T> {
     }
 
     if (!geordnet) {
-      while (getLetztesObjekt() != getFreierPlatz()) {
+      while (getLetztesObjekt()+1 != getFreierPlatz()) {
         int letztesObjekt = getLetztesObjekt();
         elemente[getFreierPlatz()] = elemente[letztesObjekt];
         elemente[letztesObjekt] = null;

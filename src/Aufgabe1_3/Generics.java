@@ -5,6 +5,16 @@ package Aufgabe1_3;
  *
  */
 public class Generics {
+  
+  
+  /**
+   * Testing
+   * @param args
+   */
+  public static void main(String[] args)
+  {
+    
+  }
 
 
   /**
