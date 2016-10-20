@@ -6,28 +6,21 @@ package Aufgabe1_3;
  */
 public class Generics {
 
-  /**
-   * Diese main methode erstellt ein Objekt der Klasse ArrayListe und erstellt
-   * ein paar Objekte dafür und prueft ob das erste Objekt eine Zahl ist
-   * 
-   * @param args
-   */
-  public static void main(String[] args) {
 
-  }
-  
-  public static boolean pruefeObErstesObjektZahlIst(ArrayListe<?> t)
-  {
-    
-    if(t.anzahlElemente > 0)
-    {
-      for(int i = 0; i < t.getAnzahlElemente(); i++)
-      {
-        
+  /**
+   * Die Funktion prueft, ob das erste Objekt in der ArrayListe eine Zahl ist,
+   * @param t die ArrayListe die ueberprueft werden soll.
+   * @return True wenn das erste Objekt eine Zahl ist.
+   */
+  public static boolean pruefeObErstesObjektZahlIst(ArrayListe<?> t) {
+    if (t.getAnzahlElemente() > 0) {
+      Class c = t.get(0).getClass();
+      if (c.equals(Integer.class) || c.equals(Double.class) || c.equals(float.class) || c.equals(long.class)
+          || c.equals(char.class)) {
+        return true;
       }
-      return true;
     }
-    return false; 
+    return false;
   }
 
 }
