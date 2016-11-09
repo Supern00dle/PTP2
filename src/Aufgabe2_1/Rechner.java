@@ -1,56 +1,39 @@
 /**
- * 
+ * Programmiertechnik 2 Aufgabenblatt 2
+ * 10.11.2016
+ * Manuel Scholz & Leo Peters
  */
 package Aufgabe2_1;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BinaryOperator;
 
-import Aufgabe2_1.Rechner.Operation;
+	public class Rechner {
+		Map<Operation, BinaryOperator<Double>> operation;
 
-/**
- * @author Manuel Scholz
- *
- */
-public class Rechner implements DoubleDoubleZuDouble {
+		/**
+		 * initialisiert die vier Rechenarten in einer HashMap
+		 */
+		public Rechner()
+		{
+			operation = new HashMap<Operation, BinaryOperator<Double>>();
 
-  public enum Operation
-  {
-    addiere,
-    subtrahiere,
-    multipliziere,
-    dividiere
-  }
+			BinaryOperator<Double> addieren = (a, b) -> a + b;
+			operation.put(Operation.ADDITION, addieren);
 
-  
-  public Rechner() {
-    List<Operation> op = new List<Operation>();
-  }
-  
-  public double berechne(Operation o, double w1, double w2)
-  {
-    switch(o){
-      case addiere:
-        break;
-      
-      case subtrahiere:
-        break;
-      case multipliziere:
-        break;
-      case dividiere:
-        break;
-    }
-    return 0;
-  }
+			BinaryOperator<Double> subtrahieren = (a, b) -> a - b;
+			operation.put(Operation.SUBTRAKTION, subtrahieren);
 
-  /* (non-Javadoc)
-   * @see Aufgabe2.DoubleDoubleZuDouble#werteAus(double, double)
-   */
-  @Override
-  public double werteAus(double d1, double d2) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+			BinaryOperator<Double> multiplizieren = (a, b) -> a * b;
+			operation.put(Operation.MULTIPLIKATION, multiplizieren);
 
+			BinaryOperator<Double> dividieren = (a, b) -> a / b;
+			operation.put(Operation.DIVISION, dividieren);
+		}
+
+		public double berechne(Operation operator, double wert1, double wert2)
+		{
+			return operation.get(operator).apply(wert1, wert2);
+		}
 }
