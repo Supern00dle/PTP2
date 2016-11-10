@@ -6,6 +6,7 @@ import org.junit.Test;
 import Aufgabe2_1.DoubleDoubleZuDouble;
 
 public class DoubleDoubleZuDoubleTest {
+  
 	@Test
 	public void testeInterface() {
 		DoubleDoubleZuDouble wert1 = (a, b) -> a * b;
