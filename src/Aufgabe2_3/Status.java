@@ -4,7 +4,7 @@
 package Aufgabe2_3;
 
 /**
- * @author Manuel Scholz
+ * @author Manuel Scholz & Leo Peters
  *
  */
 public enum Status
