@@ -1,0 +1,19 @@
+Analyse der Aufgabenstellung:
+
+Klasse: Rangierbahnhof
+Vars: Anzahl Gleise
+Funktionen: Einfahren eines Zuges
+			Ausfahren eines Zuges
+
+Klasse: Zug 
+
+Klasse: Lockführer implements Thread
+
+Funktionen: Zug ausfahren
+			Zug einfahren
+
+Klasse: Simulation
+Variablen: Schrittweite (ticks)
+
+Funktionen: init
+			main

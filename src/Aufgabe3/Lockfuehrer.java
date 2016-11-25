@@ -11,41 +11,71 @@ package Aufgabe3;
  * @author Manuel Scholz & Leo Peters
  *
  */
-public class Lockfuehrer extends Thread{
+public class Lockfuehrer extends Thread {
 
-  private enum konsolenOutputs{
-    ZUGEINGEFAHREN,
-    ZUGAUSGEFAHREN
+  Zug zug;
+
+  public enum lockfuehrerStatus {
+    ARBEITSSUCHEND, ARBEITEND, ENTLASSEN
   }
+
+  private enum konsolenOutputs {
+    ZUGEINGEFAHREN, ZUGAUSGEFAHREN
+  }
+
+  private lockfuehrerStatus arbeitsstatus;
+
   /**
    * 
    */
   public Lockfuehrer() {
-    // TODO Auto-generated constructor stub
+    arbeitsstatus = lockfuehrerStatus.ARBEITSSUCHEND;
+    zug = null;
   }
-  
-  @Override
-  public void run()
-  {
-    
-  }
-  
-  private void konsolenOutput(konsolenOutputs e)
-  {
-    switch(e)
-    {
-      case ZUGEINGEFAHREN:
-      {
-      //Hier die Meldung, dass der Lockfuehrer den Zug eingefahren hat.
-        break;
-      }
-      case ZUGAUSGEFAHREN:
-      {
-        //Hier die Meldung, dass der Lockfuehrer den Zug ausgefahren hat.
-        break;
-      }
 
+  @Override
+  public void run() {
+    while (arbeitsstatus != lockfuehrerStatus.ENTLASSEN) {
+      
+      //Hab ich einen Zug? Entlasse mich
+      if (zug != null) {
+        entlasseLockfuehrer();
+      }
+      
     }
   }
 
+  /**
+   * Entlaesst einen Lockfuerer
+   */
+  public lockfuehrerStatus entlasseLockfuehrer() {
+    arbeitsstatus = lockfuehrerStatus.ENTLASSEN;
+    return arbeitsstatus;
+  }
+
+  /**
+   * Erstellt einen Konsolenoutput.
+   * 
+   * @param e
+   *          Welcher Konsolenoutput gewaehlt werden soll.
+   */
+  private void konsolenOutput(konsolenOutputs e) {
+    switch (e) {
+      case ZUGEINGEFAHREN: {
+        // Hier die Meldung, dass der Lockfuehrer den Zug eingefahren hat.
+        break;
+      }
+      case ZUGAUSGEFAHREN: {
+        // Hier die Meldung, dass der Lockfuehrer den Zug ausgefahren hat.
+        break;
+      }
+      default: {
+        // Defaultmeldung...
+      }
+    }
+  }
+
+  public void weiseZugZu(Zug zug) {
+    this.zug = zug;
+  }
 }
