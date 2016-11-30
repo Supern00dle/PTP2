@@ -9,27 +9,27 @@ package Aufgabe3;
  */
 public class Zug {
   
-  public enum position
+  public enum Position
   {
     EINFAHREND, AUFGLEIS, AUSGEFAHREN
   }
 
-  private position pos;
+  private Position pos;
   /**
    * Konstruktor für die Klasse Zug.
    */
   public Zug() {
     
-    pos = position.EINFAHREND;
+    pos = Position.EINFAHREND;
    
   }
   
-  public void setPosition(position p)
+  public void setPosition(Position position)
   {
-    pos = p;
+    pos = position;
   }
   
-  public position getPosition()
+  public Position getPosition()
   {
     return pos;
   }
