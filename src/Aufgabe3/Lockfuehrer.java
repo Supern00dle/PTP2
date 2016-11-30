@@ -1,6 +1,8 @@
 
 package Aufgabe3;
 
+import Aufgabe3.Zug.position;
+
 /**
  * Aufgabe: Lokführer sind als Thread implementiert. Ein Lokführer hat immer genau eine von zwei möglichen
  * Aufgaben: Entweder einen neuen Zug auf ein bestimmtes Gleis einfahren oder einen Zug (der dort steht)
@@ -13,7 +15,10 @@ package Aufgabe3;
  */
 public class Lockfuehrer extends Thread {
 
-  Zug zug;
+  private Zug zug;
+  private final int zugAusfahrZeit = 800; //ms
+  private final int zugEinfahrZeit = 800; //ms
+  private Rangierbahnhof bahnhof;
 
   public enum lockfuehrerStatus {
     ARBEITSSUCHEND, ARBEITEND, ENTLASSEN
@@ -22,27 +27,60 @@ public class Lockfuehrer extends Thread {
   private enum konsolenOutputs {
     ZUGEINGEFAHREN, ZUGAUSGEFAHREN
   }
+  
+  public enum Arbeit{
+    ZUGAUSFAHREN, ZUGEINFAHREN
+  }
 
   private lockfuehrerStatus arbeitsstatus;
 
   /**
    * 
    */
-  public Lockfuehrer() {
+  public Lockfuehrer(Zug zug, Rangierbahnhof bahnhof) {
     arbeitsstatus = lockfuehrerStatus.ARBEITSSUCHEND;
-    zug = null;
+    this.zug = zug;
+    this.bahnhof = bahnhof;
+  }
+  public Lockfuehrer(Rangierbahnhof bahnhof) {
+    arbeitsstatus = lockfuehrerStatus.ARBEITSSUCHEND;
+    this.bahnhof = bahnhof;
   }
 
   @Override
   public void run() {
-    while (arbeitsstatus != lockfuehrerStatus.ENTLASSEN) {
-      
-      //Hab ich einen Zug? Entlasse mich
-      if (zug != null) {
-        entlasseLockfuehrer();
+    
+    while(zug == null)
+    {
+      sucheJob();
+      if(zug == null)
+      {
+        //warte wenn nach einmaliger Suche noch kein Zug vorhanden ist.
+        try {
+          wait(200);
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
       }
-      
     }
+      
+    
+    if(zug.getPosition() == position.EINFAHREND)
+    {
+      bahnhof.zugEinfahrenLassen(zug);
+      konsolenOutput(konsolenOutputs.ZUGEINGEFAHREN);
+    }
+    else if( zug.getPosition() == position.EINFAHREND)
+    {
+      bahnhof.zugAusfahrenLassen(zug);
+      konsolenOutput(konsolenOutputs.ZUGAUSGEFAHREN);
+    }
+    else if( zug.getPosition() == position.AUSGEFAHREN)
+    {
+      zug = null; 
+    }
+    
   }
 
   /**
@@ -72,6 +110,14 @@ public class Lockfuehrer extends Thread {
       default: {
         // Defaultmeldung...
       }
+    }
+  }
+  
+  private void sucheJob()
+  {
+    if(bahnhof.getFreieGleise() == 0)
+    {
+      
     }
   }
 
