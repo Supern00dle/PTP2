@@ -58,30 +58,6 @@ public class Lokfuehrer extends Thread {
   @Override
   public void run() {
     arbeitAusführen();
-    while (zug == null) {
-      if (arbeit == Arbeit.ZUGAUSFAHREN) {
-        sucheZugAusfahren();
-      } else if (arbeit == Arbeit.ZUGEINFAHREN) {
-        if (bahnhof.getFreieGleise() > 1) {
-        sucheZugEinfahren();
-        } else {
-          interrupt();
-        }
-      }
-    }
-    if (zug.getPosition() == Position.EINFAHREND)
-    {
-      bahnhof.zugEinfahrenLassen(zug);
-      konsolenOutput(konsolenOutputs.ZUGEINGEFAHREN);
-      interrupt();
-    } else if (zug.getPosition() == Position.AUFGLEIS) {
-      bahnhof.zugAusfahrenLassen(zug);
-      konsolenOutput(konsolenOutputs.ZUGAUSGEFAHREN);
-      interrupt();
-    } else if (zug.getPosition() == Position.AUSFAHREND) {
-      zug = null;
-      interrupt();
-    }
   }
   private void arbeitAusführen() {
     Zug zug = new Zug();

@@ -7,6 +7,7 @@
 package Aufgabe3;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import Aufgabe3.Rangierbahnhof;
 import Aufgabe3.Lokfuehrer.Arbeit;
@@ -38,11 +39,12 @@ public class Simulation extends Thread {
         lokfuehrer = new Lokfuehrer(bahnhof, Arbeit.ZUGAUSFAHREN, gleis);
       } else if (aufgabe == 0) {
         lokfuehrer = new Lokfuehrer(bahnhof, Arbeit.ZUGEINFAHREN, gleis);
-      }
-      if (kannAuftragAusführen(lokfuehrer.getArbeit(), gleis)) {
+      }    
+      if (kannAuftragAusfuehren(lokfuehrer.getArbeit(), gleis)) {
       lokfuehrer.start();
       } else {
         warteSchlange.add(lokfuehrer);
+        pruefeWarteschlange();
       }
       try {
         Thread.sleep(500);
@@ -52,8 +54,17 @@ public class Simulation extends Thread {
       }
     }
   }
-  
-  private boolean kannAuftragAusführen(Arbeit arbeit, int gleis) {
+  private void pruefeWarteschlange() {
+    for (Iterator<Lokfuehrer> iterator = warteSchlange.iterator(); iterator.hasNext();) {
+      Lokfuehrer lokfuehrer = iterator.next();
+      if (kannAuftragAusfuehren(lokfuehrer.getArbeit(), lokfuehrer.getGleis())) {
+        warteSchlange.remove(lokfuehrer);
+        lokfuehrer.start();
+        break;
+      }
+    }
+  }
+  private boolean kannAuftragAusfuehren(Arbeit arbeit, int gleis) {
     if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == ERFOLG) {
       return true;
     } else if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == FEHLER) {
