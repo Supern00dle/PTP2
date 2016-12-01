@@ -78,8 +78,7 @@ public class Lokfuehrer extends Thread {
    */
 
   private synchronized void arbeitAusfuehren() {
-    while (!kannAuftragAusfuehren(arbeit, gleis)) 
-    { 
+    while (!kannAuftragAusfuehren(arbeit, gleis)) {
       try {
         wait();
       } catch (InterruptedException e) {
@@ -119,6 +118,14 @@ public class Lokfuehrer extends Thread {
     }
     }
   }
+  /**
+   * Ueberprueft, ob der Auftrag ausgefuehrt werden kann.
+   * @param arbeit
+   * Die Arbeit, die ueberprueft werden soll
+   * @param gleis
+   * Auf welchem Gleis die Arbeit ausgefuehrt werden soll.
+   * @return  true, wenn ausgefuehrt werden kann, false wenn nicht.
+   */
   private boolean kannAuftragAusfuehren(Arbeit arbeit, int gleis) {
     if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == true) {
       return true;

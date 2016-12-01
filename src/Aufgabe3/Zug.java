@@ -38,7 +38,7 @@ public class Zug {
   {
     return pos;
   }
-  
+
   public String toString() {
     String toString = "" + zugNummer;
     return toString;
