@@ -6,6 +6,7 @@
  */
 package Aufgabe3;
 
+import Aufgabe3.Lokfuehrer.Arbeit;
 import Aufgabe3.Zug.Position;
 
 /**
@@ -71,7 +72,7 @@ public class Lokfuehrer extends Thread {
    */
   @Override
   public void run() {
-    arbeitAusführen();
+    arbeitAusfuehren();
   }
 
   /**
@@ -79,7 +80,16 @@ public class Lokfuehrer extends Thread {
    * Gleis aus- oder eingefahren.
    */
 
-  private void arbeitAusführen() {
+  private void arbeitAusfuehren() {
+    while (!kannAuftragAusfuehren(arbeit, gleis)) 
+    { 
+      try {
+        wait();
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (arbeit == Arbeit.ZUGEINFAHREN) {
       zug = new Zug();
       bahnhof.zugEinfahrenLassen(zug, gleis);
@@ -110,6 +120,17 @@ public class Lokfuehrer extends Thread {
     default: {
       System.out.println("Nichts geschieht");
     }
+    }
+  }
+  private boolean kannAuftragAusfuehren(Arbeit arbeit, int gleis) {
+    if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == true) {
+      return true;
+    } else if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == false) {
+      return false;
+    } else if (arbeit == Arbeit.ZUGAUSFAHREN && bahnhof.getZug(gleis) != null) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

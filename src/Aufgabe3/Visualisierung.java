@@ -20,7 +20,6 @@ public class Visualisierung extends Application {
   private static Rectangle gleise[];
   
   private static Rangierbahnhof bahnhof = null;
-  @SuppressWarnings("deprecation")
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Rangierbahnhof");

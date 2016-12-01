@@ -53,8 +53,8 @@ public class Rangierbahnhof extends Thread {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
     befreieGleis(gleis);
+    notifyAll();
   }
 
   /**
@@ -71,6 +71,7 @@ public class Rangierbahnhof extends Thread {
       e.printStackTrace();
     }
     belegeGleis(zug, gleis);
+    notifyAll();
   }
 
   /**

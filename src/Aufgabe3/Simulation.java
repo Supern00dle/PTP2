@@ -13,8 +13,6 @@ import Aufgabe3.Rangierbahnhof;
 import Aufgabe3.Lokfuehrer.Arbeit;
 
 public class Simulation extends Thread {
-  public static final int ERFOLG = 0;
-  public static final int FEHLER = -1;
   private Rangierbahnhof bahnhof;
   private Lokfuehrer lokfuehrer;
   private List<Lokfuehrer> warteSchlange;
@@ -39,10 +37,12 @@ public class Simulation extends Thread {
         lokfuehrer = new Lokfuehrer(bahnhof, Arbeit.ZUGAUSFAHREN, gleis);
       } else if (aufgabe == 0) {
         lokfuehrer = new Lokfuehrer(bahnhof, Arbeit.ZUGEINFAHREN, gleis);
-      }    
-      if (kannAuftragAusfuehren(lokfuehrer.getArbeit(), gleis)) {
-      lokfuehrer.start();
       } 
+      lokfuehrer.start();
+      if (kannAuftragAusfuehren(lokfuehrer.getArbeit(), gleis)) {
+      
+      }
+      }
       try {
         Thread.sleep(500);
       } catch (InterruptedException e) {
@@ -61,18 +61,6 @@ public class Simulation extends Thread {
         lokfuehrer.start();
         break;
       }
-    }
-  }
-
-  private boolean kannAuftragAusfuehren(Arbeit arbeit, int gleis) {
-    if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == true) {
-      return true;
-    } else if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == false) {
-      return false;
-    } else if (arbeit == Arbeit.ZUGAUSFAHREN && bahnhof.getZug(gleis) != null) {
-      return true;
-    } else {
-      return false;
     }
   }
 }
