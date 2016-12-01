@@ -17,7 +17,7 @@ public class Zug {
     zugNummer = zugNummerZaehler;
     zugNummerZaehler++;
   }
-  
+
   public String toString() {
     String toString = "" + zugNummer;
     return toString;
