@@ -42,16 +42,15 @@ public class Simulation extends Thread {
       }    
       if (kannAuftragAusfuehren(lokfuehrer.getArbeit(), gleis)) {
       lokfuehrer.start();
-      } else {
-        warteSchlange.add(lokfuehrer);
-        pruefeWarteschlange();
-      }
+      } 
       try {
         Thread.sleep(500);
       } catch (InterruptedException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+      
+      Visualisierung.update();
     }
   }
   private void pruefeWarteschlange() {
@@ -64,15 +63,16 @@ public class Simulation extends Thread {
       }
     }
   }
+
   private boolean kannAuftragAusfuehren(Arbeit arbeit, int gleis) {
     if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == true) {
       return true;
     } else if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == false) {
-        return false;
-      } else if (arbeit == Arbeit.ZUGAUSFAHREN && bahnhof.getZug(gleis) != null) {
-        return true;
-      } else {
-        return false;
-      }
+      return false;
+    } else if (arbeit == Arbeit.ZUGAUSFAHREN && bahnhof.getZug(gleis) != null) {
+      return true;
+    } else {
+      return false;
     }
+  }
 }

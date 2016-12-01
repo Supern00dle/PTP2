@@ -48,7 +48,7 @@ public class Visualisierung extends Application {
   {
       for(int i = 0; i < anzahlGleise; i++)
       {
-        if(bahnhof.gleisIstFrei(i))
+        if(!bahnhof.gleisIstFrei(i))
         {
           gleise[i].setFill(Color.RED);
         }

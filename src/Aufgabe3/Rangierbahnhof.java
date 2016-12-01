@@ -103,9 +103,9 @@ public class Rangierbahnhof extends Thread {
    */
   public boolean gleisIstFrei(int gleis) {
     if (this.gleis[gleis] == null) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 
