@@ -11,7 +11,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Visualisierung extends Application {
