@@ -6,26 +6,17 @@
  */
 package Aufgabe3;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import Aufgabe3.Rangierbahnhof;
 import Aufgabe3.Lokfuehrer.Arbeit;
 
 public class Simulation extends Thread {
   private Rangierbahnhof bahnhof;
   private Lokfuehrer lokfuehrer;
-  private List<Lokfuehrer> warteSchlange;
-  public List<Zug> zugliste;
 
   public Simulation(Rangierbahnhof bahnhof) {
     this.bahnhof = bahnhof;
-    warteSchlange = new ArrayList<Lokfuehrer>();
-    zugliste = new ArrayList<Zug>();
-    for (int i = 0; i < bahnhof.getAnzahlGleise(); i++) {
-      zugliste.add(bahnhof.getZug(i));
-    }
   }
+
 
   @Override
   public void run() {

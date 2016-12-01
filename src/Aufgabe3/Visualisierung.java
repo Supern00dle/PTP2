@@ -23,8 +23,6 @@ public class Visualisierung extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Rangierbahnhof");
-    StackPane wurzel = new StackPane();
-    
     
     gleise = new Rectangle[anzahlGleise];
     for(int i = 0; i < anzahlGleise; i++)

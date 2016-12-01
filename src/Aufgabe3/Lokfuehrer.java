@@ -6,9 +6,6 @@
  */
 package Aufgabe3;
 
-import Aufgabe3.Lokfuehrer.Arbeit;
-import Aufgabe3.Zug.Position;
-
 /**
  * Aufgabe: Lokführer sind als Thread implementiert. Ein Lokführer hat immer
  * genau eine von zwei möglichen Aufgaben: Entweder einen neuen Zug auf ein
