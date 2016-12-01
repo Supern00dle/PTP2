@@ -14,13 +14,13 @@ public class Zug {
     EINFAHREND, AUFGLEIS, AUSFAHREND
   }
 
-  private Position pos;
+  public Position pos;
   /**
    * Konstruktor für die Klasse Zug.
    */
   public Zug() {
     zugNummer = zugNummerZaehler;
-    zugNummer++;
+    zugNummerZaehler++;
     pos = Position.EINFAHREND;
    
   }

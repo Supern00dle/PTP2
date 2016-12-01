@@ -68,15 +68,15 @@ public class Lockfuehrer extends Thread {
         }
       } else {
 
-        if (zug.getPosition() == position.EINFAHREND) {
+        if (zug.getPosition() == Position.EINFAHREND) {
           bahnhof.zugEinfahrenLassen(zug);
           konsolenOutput(konsolenOutputs.ZUGEINGEFAHREN);
           zug = null;
-        } else if (zug.getPosition() == position.EINFAHREND) {
+        } else if (zug.getPosition() == Position.EINFAHREND) {
           bahnhof.zugAusfahrenLassen(zug);
           konsolenOutput(konsolenOutputs.ZUGAUSGEFAHREN);
           zug = null;
-        } else if (zug.getPosition() == position.AUSGEFAHREN) {
+        } else if (zug.getPosition() == Position.AUSGEFAHREN) {
           zug = null;
         }
       }

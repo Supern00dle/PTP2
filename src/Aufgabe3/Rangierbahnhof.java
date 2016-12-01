@@ -11,11 +11,11 @@ import java.util.List;
 import Aufgabe3.Zug.Position;
 
 public class Rangierbahnhof extends Thread {
-  
+
   public static final int FEHLER = -1;
   public static final int ERFOLG = 0;
-//  private final int maximalAnzahlZuege = 20;
-//  private final int anzahlGleise = 8;
+  // private final int maximalAnzahlZuege = 20;
+  // private final int anzahlGleise = 8;
   private final int zugEinfahrZeit = 5000; // ms
   private final int zugAusfahrZeit = 5000; // ms
   private Zug[] gleis; // repraesentiert die Gleise
@@ -33,16 +33,25 @@ public class Rangierbahnhof extends Thread {
    * @param zug
    *          Der Auszufahrende Zug.
    */
-  public synchronized void zugAusfahrenLassen(Zug zug) {
-    try {
-      wait(zugAusfahrZeit);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+  public synchronized void zugAusfahrenLassen(int gleis) {
+    while (this.gleis[gleis] == null) {
+      try {
+        wait();
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
-    befreieGleis(zug);
-    notifyAll();
-    // TODO Zug stirbt?!
+    if (this.gleis[gleis] != null) {
+      try {
+        wait(500);
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      befreieGleis(gleis);
+      notify();
+    }
   }
 
   /**
@@ -51,18 +60,27 @@ public class Rangierbahnhof extends Thread {
    * @param zug
    *          Der einzufahrende Zug.
    */
-  public synchronized void zugEinfahrenLassen(Zug zug) {
-    if (getFreieGleise() > 0) {
+  public synchronized void zugEinfahrenLassen(Zug zug, int gleis) {
+    while (belegeGleis(zug, gleis) == FEHLER) {
       try {
-        wait(zugEinfahrZeit);
+        wait();
       } catch (InterruptedException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-      belegeGleis(zug);
-      zug.setPosition(Position.AUFGLEIS);
     }
-    notifyAll();
+
+    if (belegeGleis(zug, gleis) == ERFOLG) {
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      belegeGleis(zug, gleis);
+      zug.setPosition(Position.AUFGLEIS);
+      notify();
+    }
   }
 
   public int getBelegteGleise() {
@@ -118,8 +136,8 @@ public class Rangierbahnhof extends Thread {
   /**
    * Belegt ein Gleis mit einem Zug
    * 
-   * @return Wenn -1 zurückgegeben wird, ist das Gleis bereits belegt.
-   *         Wenn 0 zurückgegeben wird, hat das belegen geklappt.
+   * @return Wenn -1 zurückgegeben wird, ist das Gleis bereits belegt. Wenn 0
+   *         zurückgegeben wird, hat das belegen geklappt.
    * 
    * @param z
    *          Der Zug
@@ -152,28 +170,36 @@ public class Rangierbahnhof extends Thread {
       return FEHLER;
     }
   }
-
+  public int gleisIstFrei(int gleis) {
+    if (this.gleis[gleis] == null) {
+      return ERFOLG;
+    } else {
+      return FEHLER;
+    }
+  }
   /**
    * Befreit ein Gleis von seinem Zug
    * 
    * @param z
    *          Der Zug
    */
-  private void befreieGleis(Zug z) {
-    int g = getGleisVonZug(z);
-    if (g != FEHLER) {
-      gleis[g] = null;
-      z.setPosition(Position.AUSFAHREND);
-    }
+  private void befreieGleis(int g) {
+    gleis[g] = null;
   }
 
   public Zug getAusfahrbarenZug() {
-    for(int i = 0; i < gleis.length; i++) {
-      if(gleis[i] != null && gleis[i].getPosition() == Position.AUFGLEIS) {
+    for (int i = 0; i < gleis.length; i++) {
+      if (gleis[i] != null && gleis[i].getPosition() == Position.AUFGLEIS) {
         return gleis[i];
       }
     }
     return null;
+  }
+  public int getAnzahlGleise() {
+    return gleis.length;
+  }
+  public Zug getZug(int index) {
+    return gleis[index];
   }
   @Override
   public void run() {

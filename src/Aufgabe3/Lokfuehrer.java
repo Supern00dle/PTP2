@@ -24,6 +24,7 @@ public class Lokfuehrer extends Thread {
   private final int zugEinfahrZeit = 5000; // ms
   private Rangierbahnhof bahnhof;
   private Arbeit arbeit;
+  private int gleis;
 
   // public enum lockfuehrerStatus {
   // ARBEITSSUCHEND, ARBEITEND, ENTLASSEN
@@ -47,14 +48,16 @@ public class Lokfuehrer extends Thread {
     this.arbeit = arbeit;
   }
 
-  public Lokfuehrer(Rangierbahnhof bahnhof, Arbeit arbeit) {
+  public Lokfuehrer(Rangierbahnhof bahnhof, Arbeit arbeit, int gleis) {
     // arbeitsstatus = lockfuehrerStatus.ARBEITSSUCHEND;
     this.arbeit = arbeit;
     this.bahnhof = bahnhof;
+    this.gleis = gleis;
   }
 
   @Override
   public void run() {
+    arbeitAusführen();
     while (zug == null) {
       if (arbeit == Arbeit.ZUGAUSFAHREN) {
         sucheZugAusfahren();
@@ -80,7 +83,23 @@ public class Lokfuehrer extends Thread {
       interrupt();
     }
   }
-
+  private void arbeitAusführen() {
+    Zug zug = new Zug();
+    if (arbeit == Arbeit.ZUGEINFAHREN) {
+      bahnhof.zugEinfahrenLassen(zug, gleis);
+      konsolenOutput(konsolenOutputs.ZUGEINGEFAHREN);
+    } else if (arbeit == Arbeit.ZUGAUSFAHREN) {
+      bahnhof.zugAusfahrenLassen(gleis);
+      konsolenOutput(konsolenOutputs.ZUGAUSGEFAHREN);
+    }     
+  }
+  public int getGleis() {
+    return gleis;
+  }
+  
+  public Arbeit getArbeit() {
+    return arbeit;
+  }
   /**
    * Entlaesst einen Lockfuehrer durch interrupt()
    */
