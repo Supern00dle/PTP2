@@ -1,3 +1,9 @@
+/**
+ * PTP2 Praktikum
+ * Aufgabe 3
+ * 01.12.2016
+ * Manuel Scholz & Leo Peters
+ */
 package Aufgabe3;
 
 import javafx.application.Application;
