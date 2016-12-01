@@ -9,6 +9,10 @@ package Aufgabe3;
 public class Zug {
   private static int zugNummerZaehler = 0;
   private int zugNummer;
+  
+  /**
+   * Enum, das beschreibt in welcher Position sich ein Zug befindet.
+   */
   public enum Position
   {
     EINFAHREND, AUFGLEIS, AUSFAHREND

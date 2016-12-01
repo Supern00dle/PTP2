@@ -20,46 +20,65 @@ import Aufgabe3.Zug.Position;
 public class Lokfuehrer extends Thread {
 
   private Zug zug = null;
-  private final int zugAusfahrZeit = 5000; // ms
-  private final int zugEinfahrZeit = 5000; // ms
   private Rangierbahnhof bahnhof;
   private Arbeit arbeit;
   private int gleis;
 
-  // public enum lockfuehrerStatus {
-  // ARBEITSSUCHEND, ARBEITEND, ENTLASSEN
-  // }
-
+  /**
+   * Enum zur Ausgabe auf der Konsole.
+   */
   private enum konsolenOutputs {
     ZUGEINGEFAHREN, ZUGAUSGEFAHREN
   }
 
+  /**
+   * Enum für die Aufträge der Lokfuehrer.
+   */
   public enum Arbeit {
     ZUGAUSFAHREN, ZUGEINFAHREN
   }
 
-  // private lockfuehrerStatus arbeitsstatus;
-
   /**
+   * Initialisiert einen Lokfuehrer mit einem Bahnhof einem Auftrag und einem
+   * bestimmten Gleis.
    * 
+   * @param bahnhof
+   *          Der Bahnhof, auf welchem der Lokfuehrer seiner Arbeit nachgeht
+   * 
+   * @param arbeit
+   *          Den Auftrag, den der Lokfuehrer ausführen muss.
+   * 
+   * @param gleis
+   *          Der Index des Gleises, auf welchem der Lokfuehrer einen Zug ein-
+   *          oder ausfährt.
    */
-  public Lokfuehrer(Arbeit arbeit) {
-    // arbeitsstatus = lockfuehrerStatus.ARBEITSSUCHEND;
-    this.arbeit = arbeit;
-  }
-
   public Lokfuehrer(Rangierbahnhof bahnhof, Arbeit arbeit, int gleis) {
-    // arbeitsstatus = lockfuehrerStatus.ARBEITSSUCHEND;
     this.arbeit = arbeit;
     this.bahnhof = bahnhof;
     this.gleis = gleis;
   }
 
+  public int getGleis() {
+    return gleis;
+  }
+
+  public Arbeit getArbeit() {
+    return arbeit;
+  }
+
+  /**
+   * Run Methode für Threads.
+   */
   @Override
   public void run() {
     arbeitAusführen();
   }
-  
+
+  /**
+   * Je nachdem, welche Arbeit der Lokfuehrer hat, wird entweder ein Zug von
+   * Gleis aus- oder eingefahren.
+   */
+
   private void arbeitAusführen() {
     if (arbeit == Arbeit.ZUGEINFAHREN) {
       zug = new Zug();
@@ -69,60 +88,28 @@ public class Lokfuehrer extends Thread {
       zug = bahnhof.getZug(gleis);
       bahnhof.zugAusfahrenLassen(gleis);
       konsolenOutput(konsolenOutputs.ZUGAUSGEFAHREN);
-    }     
+    }
   }
-  public int getGleis() {
-    return gleis;
-  }
-  
-  public Arbeit getArbeit() {
-    return arbeit;
-  }
-  /**
-   * Entlaesst einen Lockfuehrer durch interrupt()
-   */
-  public void entlasseLockfuehrer() {
-    interrupt();
-  }
-  // public lockfuehrerStatus entlasseLockfuehrer() {
-  // arbeitsstatus = lockfuehrerStatus.ENTLASSEN;
-  // return arbeitsstatus;
-  // }
 
   /**
-   * Erstellt einen Konsolenoutput.
+   * Erstellt ein Konsolenoutput.
    * 
-   * @param e
+   * @param output
    *          Welcher Konsolenoutput gewaehlt werden soll.
    */
-  private void konsolenOutput(konsolenOutputs e) {
-    switch (e) {
+  private void konsolenOutput(konsolenOutputs output) {
+    switch (output) {
     case ZUGEINGEFAHREN: {
       System.out.println("Der Zug: " + zug.toString() + " ist in den Bahnhof eingefahren.");
       break;
     }
     case ZUGAUSGEFAHREN: {
-      System.out.println("Der Zug: "+ zug.toString() + " wurde aus dem Bahnhof ausgefahren.");
+      System.out.println("Der Zug: " + zug.toString() + " wurde aus dem Bahnhof ausgefahren.");
       break;
     }
     default: {
-      // Defaultmeldung...
+      System.out.println("Nichts geschieht");
     }
     }
-  }
-
-  private synchronized void sucheZugAusfahren() {
-    Zug zug1 = bahnhof.getAusfahrbarenZug();
-    if (zug1 != null) {
-      weiseZugZu(zug1);
-    }
-  }
-
-  private synchronized void sucheZugEinfahren() {
-    weiseZugZu(new Zug());
-  }
-
-  public void weiseZugZu(Zug zug) {
-    this.zug = zug;
   }
 }
