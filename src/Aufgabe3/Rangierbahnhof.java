@@ -10,8 +10,6 @@ import Aufgabe3.Zug.Position;
 
 public class Rangierbahnhof extends Thread {
 
-  public static final int FEHLER = -1;
-  public static final int ERFOLG = 0;
   private Zug[] gleis; // repraesentiert die Gleise
 
   /**
