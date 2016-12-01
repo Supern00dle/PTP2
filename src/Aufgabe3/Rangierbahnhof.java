@@ -10,15 +10,11 @@ import java.util.List;
 
 import Aufgabe3.Zug.Position;
 
-/**
- * @author Manuel Scholz & Leo Peters
- *
- */
 public class Rangierbahnhof extends Thread {
   public static final int FEHLER = -1;
   public static final int ERFOLG = 0;
-  private final int maximalAnzahlZuege = 20;
-  private final int anzahlGleise = 8;
+//  private final int maximalAnzahlZuege = 20;
+//  private final int anzahlGleise = 8;
   private final int zugEinfahrZeit = 5000; // ms
   private final int zugAusfahrZeit = 5000; // ms
   private Zug[] gleis; // repraesentiert die Gleise
@@ -26,7 +22,7 @@ public class Rangierbahnhof extends Thread {
   /**
    * Konstruktor der Klasse Rangierbahnhof.
    */
-  public Rangierbahnhof() {
+  public Rangierbahnhof(int anzahlGleise) {
     gleis = new Zug[anzahlGleise];
   }
 
@@ -44,6 +40,7 @@ public class Rangierbahnhof extends Thread {
       e.printStackTrace();
     }
     befreieGleis(zug);
+    notifyAll();
     // TODO Zug stirbt?!
   }
 
@@ -64,6 +61,7 @@ public class Rangierbahnhof extends Thread {
       belegeGleis(zug);
       zug.setPosition(Position.AUFGLEIS);
     }
+    notifyAll();
   }
 
   public int getBelegteGleise() {

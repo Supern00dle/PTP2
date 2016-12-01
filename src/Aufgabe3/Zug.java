@@ -1,14 +1,14 @@
 /**
- * 
+ * PTP2 Praktikum
+ * Aufgabe 3
+ * 01.12.2016
+ * Manuel Scholz & Leo Peters
  */
 package Aufgabe3;
 
-/**
- * @author Manuel Scholz & Leo Peters
- *
- */
 public class Zug {
-  
+  private static int zugNummerZaehler = 0;
+  private int zugNummer;
   public enum Position
   {
     EINFAHREND, AUFGLEIS, AUSFAHREND
@@ -19,7 +19,8 @@ public class Zug {
    * Konstruktor für die Klasse Zug.
    */
   public Zug() {
-    
+    zugNummer = zugNummerZaehler;
+    zugNummer++;
     pos = Position.EINFAHREND;
    
   }
@@ -33,6 +34,9 @@ public class Zug {
   {
     return pos;
   }
-  
+  public String toString() {
+    String toString = "" + zugNummer;
+    return toString;
+  }
 
 }
