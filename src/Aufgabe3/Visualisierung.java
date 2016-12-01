@@ -1,14 +1,10 @@
 package Aufgabe3;
 
-import javax.swing.plaf.synth.SynthSplitPaneUI;
-
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -17,27 +13,44 @@ public class Visualisierung extends Application {
   private final static int anzahlGleise = 10;
   
   private static Rangierbahnhof bahnhof = null;
+  @SuppressWarnings("deprecation")
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Rangierbahnhof");
     StackPane wurzel = new StackPane();
-    Scene scene = new Scene(wurzel, 300, 250);
+    
     
     Rectangle[] gleise = new Rectangle[anzahlGleise];
-    Rectangle[] andereGleise = new Rectangle[anzahlGleise];
     for(int i = 0; i < anzahlGleise; i++)
     {
-      gleise[i] = new Rectangle(10, 10, 5, 200);
-     // andereGleise[i] = new Rectangle(0, 10, 5, 200);
+      gleise[i] = new Rectangle(50+20*i, 10, 8, 100);
       gleise[i].setFill(Color.GRAY);
-
-      wurzel.getChildren().addAll(gleise[i]);  
     }
     
-  
+    Group root =  new Group();
+    root.getChildren().addAll(gleise);
+    
+    Scene scene = new Scene(root, 300, 250);
     primaryStage.setScene(scene);
     primaryStage.show();
+    
+    while(true)
+    {
+      for(int i = 0; i < anzahlGleise; i++)
+      {
+        if(bahnhof.gleisIstFrei(i))
+        {
+          gleise[i].setFill(Color.RED);
+        }
+        else
+        {
+          gleise[i].setFill(Color.GRAY);
+        }
+      }
+    }
   }
+  
+  
 
   public static void main(String[] args) {
     
