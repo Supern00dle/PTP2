@@ -65,9 +65,9 @@ public class Simulation extends Thread {
     }
   }
   private boolean kannAuftragAusfuehren(Arbeit arbeit, int gleis) {
-    if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == ERFOLG) {
+    if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == true) {
       return true;
-    } else if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == FEHLER) {
+    } else if (arbeit == Arbeit.ZUGEINFAHREN && bahnhof.gleisIstFrei(gleis) == false) {
         return false;
       } else if (arbeit == Arbeit.ZUGAUSFAHREN && bahnhof.getZug(gleis) != null) {
         return true;

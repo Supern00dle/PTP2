@@ -113,46 +113,29 @@ public class Rangierbahnhof extends Thread {
   /**
    * Belegt ein Gleis mit einem Zug
    * 
-   * @return Wenn -1 zurückgegeben wird, ist das Gleis bereits belegt. Wenn 0
-   *         zurückgegeben wird, hat das belegen geklappt.
+   * @return Wenn false zurückgegeben wird, ist das Gleis bereits belegt. Wenn
+   *         true zurückgegeben wird, hat das belegen geklappt.
    * 
    * @param z
    *          Der Zug
    * @param i
    *          Die Gleisnummer
    */
-  private int belegeGleis(Zug z, int i) {
+  private boolean belegeGleis(Zug z, int i) {
     if (gleis[i] == null) {
       gleis[i] = z;
       z.setPosition(Position.EINFAHREND);
-      return ERFOLG;
+      return true;
     } else {
-      return FEHLER;
+      return false;
     }
   }
 
-  /**
-   * Belegt das nächste freie Gleis mit einem Zug
-   * 
-   * @param z
-   *          der Zug
-   */
-  private int belegeGleis(Zug z) {
-    int freiesGleis = getFreiesGleis();
-    if (freiesGleis != FEHLER) {
-      gleis[getFreiesGleis()] = z;
-      z.setPosition(Position.EINFAHREND);
-      return ERFOLG;
-    } else {
-      return FEHLER;
-    }
-  }
-
-  public int gleisIstFrei(int gleis) {
+  public boolean gleisIstFrei(int gleis) {
     if (this.gleis[gleis] == null) {
-      return ERFOLG;
+      return false;
     } else {
-      return FEHLER;
+      return true;
     }
   }
 

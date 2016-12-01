@@ -9,6 +9,7 @@ package Aufgabe3;
 public class Zug {
   private static int zugNummerZaehler = 0;
   private int zugNummer;
+  private Position pos;
   
   /**
    * Enum, das beschreibt in welcher Position sich ein Zug befindet.
@@ -17,8 +18,7 @@ public class Zug {
   {
     EINFAHREND, AUFGLEIS, AUSFAHREND
   }
-
-  public Position pos;
+  
   /**
    * Konstruktor für die Klasse Zug.
    */
@@ -38,6 +38,7 @@ public class Zug {
   {
     return pos;
   }
+  
   public String toString() {
     String toString = "" + zugNummer;
     return toString;
