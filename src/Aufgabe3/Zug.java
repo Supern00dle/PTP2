@@ -11,7 +11,7 @@ public class Zug {
   
   public enum Position
   {
-    EINFAHREND, AUFGLEIS, AUSGEFAHREN
+    EINFAHREND, AUFGLEIS, AUSFAHREND
   }
 
   private Position pos;

@@ -15,12 +15,12 @@ import Aufgabe3.Zug.Position;
  *
  */
 public class Rangierbahnhof extends Thread {
-
-  public static final int KEINFREIESGLEIS = -1;
+  public static final int FEHLER = -1;
+  public static final int ERFOLG = 0;
   private final int maximalAnzahlZuege = 20;
   private final int anzahlGleise = 8;
-  private final long zugEinfahrZeit = 5000; // ms
-  private final long zugAusfahrZeit = 5000; // ms
+  private final int zugEinfahrZeit = 5000; // ms
+  private final int zugAusfahrZeit = 5000; // ms
   private Zug[] gleis; // repraesentiert die Gleise
 
   /**
@@ -44,6 +44,7 @@ public class Rangierbahnhof extends Thread {
       e.printStackTrace();
     }
     befreieGleis(zug);
+    // TODO Zug stirbt?!
   }
 
   /**
@@ -61,6 +62,7 @@ public class Rangierbahnhof extends Thread {
         e.printStackTrace();
       }
       belegeGleis(zug);
+      zug.setPosition(Position.AUFGLEIS);
     }
   }
 
@@ -75,23 +77,19 @@ public class Rangierbahnhof extends Thread {
   }
 
   /**
-   * Gibt das Gleis unter einem Zug zurueck.
+   * Gibt das Gleis eines Zuges zurueck.
    * 
    * @param z
    *          Der Zug
    * @return Die Gleisnummer, wenn -1, dann ist der zug nicht auf dem Bahnhof.
    */
   private int getGleisVonZug(Zug z) {
-    int gleisDesZuges = -1;
     for (int i = 0; i < gleis.length; i++) {
       if (gleis[i].equals(z)) {
-        gleisDesZuges = i;
-        break;
+        return i;
       }
     }
-
-    return gleisDesZuges;
-
+    return FEHLER;
   }
 
   /**
@@ -105,7 +103,7 @@ public class Rangierbahnhof extends Thread {
         return i;
       }
     }
-    return KEINFREIESGLEIS;
+    return FEHLER;
   }
 
   public int getFreieGleise() {
@@ -121,14 +119,22 @@ public class Rangierbahnhof extends Thread {
   /**
    * Belegt ein Gleis mit einem Zug
    * 
+   * @return Wenn -1 zurückgegeben wird, ist das Gleis bereits belegt.
+   *         Wenn 0 zurückgegeben wird, hat das belegen geklappt.
+   * 
    * @param z
    *          Der Zug
    * @param i
    *          Die Gleisnummer
    */
-  private void belegeGleis(Zug z, int i) {
-    // TODO: handling wenn Gleis belegt
-    gleis[i] = z;
+  private int belegeGleis(Zug z, int i) {
+    if (gleis[i] == null) {
+      gleis[i] = z;
+      z.setPosition(Position.EINFAHREND);
+      return ERFOLG;
+    } else {
+      return FEHLER;
+    }
   }
 
   /**
@@ -137,9 +143,15 @@ public class Rangierbahnhof extends Thread {
    * @param z
    *          der Zug
    */
-  private void belegeGleis(Zug z) {
-    // TODO: handling wenn kein freies Gleis
-    gleis[getFreiesGleis()] = z;
+  private int belegeGleis(Zug z) {
+    int freiesGleis = getFreiesGleis();
+    if (freiesGleis != FEHLER) {
+      gleis[getFreiesGleis()] = z;
+      z.setPosition(Position.EINFAHREND);
+      return ERFOLG;
+    } else {
+      return FEHLER;
+    }
   }
 
   /**
@@ -150,22 +162,19 @@ public class Rangierbahnhof extends Thread {
    */
   private void befreieGleis(Zug z) {
     int g = getGleisVonZug(z);
-    if (g != -1) {
+    if (g != FEHLER) {
       gleis[g] = null;
+      z.setPosition(Position.AUSFAHREND);
     }
   }
 
-  public Zug getAusfahrbarenZug()
-  {
-    Zug z = null;
-    
-    while()
-      if(gleis[i] != null)
-      {
-        
+  public Zug getAusfahrbarenZug() {
+    for(int i = 0; i < gleis.length; i++) {
+      if(gleis[i] != null && gleis[i].getPosition() == Position.AUFGLEIS) {
+        return gleis[i];
       }
-        
-    
+    }
+    return null;
   }
 
   @Override
