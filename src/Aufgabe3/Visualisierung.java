@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 public class Visualisierung extends Application {
   
   private final static int anzahlGleise = 10;
+  private static Rectangle gleise[];
   
   private static Rangierbahnhof bahnhof = null;
   @SuppressWarnings("deprecation")
@@ -26,7 +27,7 @@ public class Visualisierung extends Application {
     StackPane wurzel = new StackPane();
     
     
-    Rectangle[] gleise = new Rectangle[anzahlGleise];
+    gleise = new Rectangle[anzahlGleise];
     for(int i = 0; i < anzahlGleise; i++)
     {
       gleise[i] = new Rectangle(50+20*i, 10, 8, 100);
@@ -40,8 +41,11 @@ public class Visualisierung extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
     
-    while(true)
-    {
+  }
+  
+  
+  public static void update()
+  {
       for(int i = 0; i < anzahlGleise; i++)
       {
         if(bahnhof.gleisIstFrei(i))
@@ -53,10 +57,7 @@ public class Visualisierung extends Application {
           gleise[i].setFill(Color.GRAY);
         }
       }
-    }
   }
-  
-  
 
   public static void main(String[] args) {
     
@@ -67,5 +68,6 @@ public class Visualisierung extends Application {
     sim.start();
     
     launch(args);
+    
   }
 }
