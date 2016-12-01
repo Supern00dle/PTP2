@@ -66,6 +66,7 @@ public class Lokfuehrer extends Thread {
       bahnhof.zugEinfahrenLassen(zug, gleis);
       konsolenOutput(konsolenOutputs.ZUGEINGEFAHREN);
     } else if (arbeit == Arbeit.ZUGAUSFAHREN) {
+      zug = bahnhof.getZug(gleis);
       bahnhof.zugAusfahrenLassen(gleis);
       konsolenOutput(konsolenOutputs.ZUGAUSGEFAHREN);
     }     
@@ -101,7 +102,7 @@ public class Lokfuehrer extends Thread {
       break;
     }
     case ZUGAUSGEFAHREN: {
-      System.out.println("Der Zug: wurde aus dem Bahnhof ausgefahren.");
+      System.out.println("Der Zug: "+ zug.toString() + " wurde aus dem Bahnhof ausgefahren.");
       break;
     }
     default: {
