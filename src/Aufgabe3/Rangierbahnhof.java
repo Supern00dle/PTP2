@@ -13,7 +13,6 @@ import Aufgabe3.Zug.position;
  */
 public class Rangierbahnhof extends Thread {
 
-  private final int maximalAnzahlZuege = 20;
   private final int anzahlGleise = 8;
   private final long zugEinfahrZeit = 5000; // ms
   private final long zugAusfahrZeit = 5000; // ms
@@ -70,7 +69,7 @@ public class Rangierbahnhof extends Thread {
   public int getBelegteGleise() {
     int counter = 0;
     for (int i = 0; i < gleis.length; i++) {
-      if (gleis[i] == null) {
+      if (gleis[i] != null) {
         counter++;
       }
     }
@@ -160,15 +159,21 @@ public class Rangierbahnhof extends Thread {
   public Zug getAusfahrbarenZug()
   {
     Zug z = null;
-    
-    while()
-      if(gleis[i] != null)
+    if(getBelegteGleise() > 0)
+    {
+      while(z == null)
       {
-        
+        z = gleis[(int) (Math.random()*gleis.length)];
       }
+    }
+    else
+    {
+      return null;
+    }
         
-    
+    return z;
   }
+  
   @Override
   public void run() {
 
