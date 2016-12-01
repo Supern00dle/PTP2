@@ -34,24 +34,14 @@ public class Rangierbahnhof extends Thread {
    *          Der Auszufahrende Zug.
    */
   public synchronized void zugAusfahrenLassen(int gleis) {
-    while (this.gleis[gleis] == null) {
-      try {
-        wait();
-      } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+    try {
+      wait(500);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-    if (this.gleis[gleis] != null) {
-      try {
-        wait(500);
-      } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      befreieGleis(gleis);
-      notify();
-    }
+
+    befreieGleis(gleis);
   }
 
   /**
@@ -61,26 +51,13 @@ public class Rangierbahnhof extends Thread {
    *          Der einzufahrende Zug.
    */
   public synchronized void zugEinfahrenLassen(Zug zug, int gleis) {
-    while (belegeGleis(zug, gleis) == FEHLER) {
-      try {
-        wait();
-      } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+    try {
+      wait(500);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-
-    if (belegeGleis(zug, gleis) == ERFOLG) {
-      try {
-        Thread.sleep(500);
-      } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      belegeGleis(zug, gleis);
-      zug.setPosition(Position.AUFGLEIS);
-      notify();
-    }
+    belegeGleis(zug, gleis);
   }
 
   public int getBelegteGleise() {
@@ -170,6 +147,7 @@ public class Rangierbahnhof extends Thread {
       return FEHLER;
     }
   }
+
   public int gleisIstFrei(int gleis) {
     if (this.gleis[gleis] == null) {
       return ERFOLG;
@@ -177,6 +155,7 @@ public class Rangierbahnhof extends Thread {
       return FEHLER;
     }
   }
+
   /**
    * Befreit ein Gleis von seinem Zug
    * 
@@ -195,12 +174,15 @@ public class Rangierbahnhof extends Thread {
     }
     return null;
   }
+
   public int getAnzahlGleise() {
     return gleis.length;
   }
+
   public Zug getZug(int index) {
     return gleis[index];
   }
+
   @Override
   public void run() {
 

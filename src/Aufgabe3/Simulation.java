@@ -75,9 +75,4 @@ public class Simulation extends Thread {
         return false;
       }
     }
-  public static void main(String[] args) {
-    Rangierbahnhof bahnhof = new Rangierbahnhof(10);
-    Simulation sim = new Simulation(bahnhof);
-    sim.start();
-  }
 }

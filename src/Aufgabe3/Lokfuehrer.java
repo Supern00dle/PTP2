@@ -59,9 +59,10 @@ public class Lokfuehrer extends Thread {
   public void run() {
     arbeitAusführen();
   }
+  
   private void arbeitAusführen() {
-    Zug zug = new Zug();
     if (arbeit == Arbeit.ZUGEINFAHREN) {
+      zug = new Zug();
       bahnhof.zugEinfahrenLassen(zug, gleis);
       konsolenOutput(konsolenOutputs.ZUGEINGEFAHREN);
     } else if (arbeit == Arbeit.ZUGAUSFAHREN) {
@@ -96,11 +97,11 @@ public class Lokfuehrer extends Thread {
   private void konsolenOutput(konsolenOutputs e) {
     switch (e) {
     case ZUGEINGEFAHREN: {
-      System.out.println("Der Zug: " + zug + " ist in den Bahnhof eingefahren.");
+      System.out.println("Der Zug: " + zug.toString() + " ist in den Bahnhof eingefahren.");
       break;
     }
     case ZUGAUSGEFAHREN: {
-      System.out.println("Der Zug: " + zug + " wurde aus dem Bahnhof ausgefahren.");
+      System.out.println("Der Zug: wurde aus dem Bahnhof ausgefahren.");
       break;
     }
     default: {
