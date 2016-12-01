@@ -6,18 +6,12 @@
  */
 package Aufgabe3;
 
-import java.util.List;
-
 import Aufgabe3.Zug.Position;
 
 public class Rangierbahnhof extends Thread {
 
   public static final int FEHLER = -1;
   public static final int ERFOLG = 0;
-  // private final int maximalAnzahlZuege = 20;
-  // private final int anzahlGleise = 8;
-  private final int zugEinfahrZeit = 5000; // ms
-  private final int zugAusfahrZeit = 5000; // ms
   private Zug[] gleis; // repraesentiert die Gleise
 
   /**
@@ -25,6 +19,25 @@ public class Rangierbahnhof extends Thread {
    */
   public Rangierbahnhof(int anzahlGleise) {
     gleis = new Zug[anzahlGleise];
+  }
+
+  /**
+   * Gibt die Anzahl der Gleise zurück.
+   */
+  public int getAnzahlGleise() {
+    return gleis.length;
+  }
+
+  /**
+   * Gibt einen Zug aufgrund seines Indexes im gleisArray zurück.
+   * 
+   * @param index
+   *          Index ist die Gleisnummer, auf dem der Zug steht
+   * 
+   * @return Gibt den Zug auf dem Gleis zurück
+   */
+  public Zug getZug(int index) {
+    return gleis[index];
   }
 
   /**
@@ -60,56 +73,6 @@ public class Rangierbahnhof extends Thread {
     belegeGleis(zug, gleis);
   }
 
-  public int getBelegteGleise() {
-    int belegteGleise = 0;
-    for (int i = 0; i < gleis.length; i++) {
-      if (gleis[i] != null) {
-        belegteGleise++;
-      }
-    }
-    return belegteGleise;
-  }
-
-  /**
-   * Gibt das Gleis eines Zuges zurueck.
-   * 
-   * @param z
-   *          Der Zug
-   * @return Die Gleisnummer, wenn -1, dann ist der zug nicht auf dem Bahnhof.
-   */
-  private int getGleisVonZug(Zug z) {
-    for (int i = 0; i < gleis.length; i++) {
-      if (gleis[i].equals(z)) {
-        return i;
-      }
-    }
-    return FEHLER;
-  }
-
-  /**
-   * Gibt ein freies Gleis zurueck.
-   * 
-   * @return Das freie Gleis. wenn -1, dann ist kein Gleis frei;
-   */
-  private int getFreiesGleis() {
-    for (int i = 0; i < gleis.length; i++) {
-      if (gleis[i] == null) {
-        return i;
-      }
-    }
-    return FEHLER;
-  }
-
-  public int getFreieGleise() {
-    int freieGleise = 0;
-    for (int i = 0; i < gleis.length; i++) {
-      if (gleis[i] == null) {
-        freieGleise++;
-      }
-    }
-    return freieGleise;
-  }
-
   /**
    * Belegt ein Gleis mit einem Zug
    * 
@@ -131,6 +94,13 @@ public class Rangierbahnhof extends Thread {
     }
   }
 
+  /**
+   * Überprüft ob ein bestimmtes Gleis frei ist oder nicht.
+   * 
+   * @param gleis
+   *          Ein Gleis, von dem man wissen möchte, ob es frei ist.
+   * @return Gibt true zurück, wenn Gleis frei ist. False, wenn nicht.
+   */
   public boolean gleisIstFrei(int gleis) {
     if (this.gleis[gleis] == null) {
       return false;
@@ -148,37 +118,4 @@ public class Rangierbahnhof extends Thread {
   private void befreieGleis(int g) {
     gleis[g] = null;
   }
-
-  public Zug getAusfahrbarenZug() {
-    for (int i = 0; i < gleis.length; i++) {
-      if (gleis[i] != null && gleis[i].getPosition() == Position.AUFGLEIS) {
-        return gleis[i];
-      }
-    }
-    return null;
-  }
-
-  public int getAnzahlGleise() {
-    return gleis.length;
-  }
-
-  public Zug getZug(int index) {
-    return gleis[index];
-  }
-
-  @Override
-  public void run() {
-
-  }
-
-  /**
-   * Loescht den Zug aus der Zugliste
-   * 
-   * @param z
-   *          Der zu loeschende Zug
-   */
-  public void entferneZug(Zug z) {
-
-  }
-
 }
