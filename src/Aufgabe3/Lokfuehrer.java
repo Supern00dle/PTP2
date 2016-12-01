@@ -80,7 +80,7 @@ public class Lokfuehrer extends Thread {
    * Gleis aus- oder eingefahren.
    */
 
-  private void arbeitAusfuehren() {
+  private synchronized void arbeitAusfuehren() {
     while (!kannAuftragAusfuehren(arbeit, gleis)) 
     { 
       try {
