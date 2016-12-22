@@ -93,8 +93,8 @@ public class BVAnwendung extends Application {
     }
     simulationsGitter.add(button, 0, 0);
     simulationsGitter.add(checkbox, 0, 1);
-    wurzel.setLeft(simulationsGitter);
-    wurzel.setRight(bewegungsGitter);
+    wurzel.setRight(simulationsGitter);
+    wurzel.setLeft(bewegungsGitter);
     
     button.setOnAction(new EventHandler<ActionEvent>(){
       @Override
