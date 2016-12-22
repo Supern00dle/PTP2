@@ -1,7 +1,5 @@
 package braitenberg.braitenbergvehikel;
 
-import javafx.scene.control.Skinnable;
-
 /**
  * Repräsentiert einen Vektor in 2D.
  * 
