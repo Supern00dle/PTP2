@@ -1,5 +1,7 @@
 package braitenberg.braitenbergvehikel;
 
+import javafx.scene.control.Skinnable;
+
 /**
  * Repräsentiert einen Vektor in 2D.
  * 
@@ -87,6 +89,11 @@ public class Vektor2 {
 
   public double y() {
     return koordinaten[1];
+  }
+  
+  public static double winkelZwischenZweiVektoren(Vektor2 v1, Vektor2 v2)
+  {
+    return (v1.skalarProdukt(v2)) / (v1.getNorm() * v2.getNorm());
   }
 
   @Override
