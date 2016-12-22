@@ -5,10 +5,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.application.Platform;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 import braitenberg.braitenbergvehikel.BVSimulation;
 import braitenberg.braitenbergvehikel.BraitenbergVehikel;
@@ -67,6 +70,10 @@ public class BVCanvas extends Canvas implements Observer {
   public Point welt2BildKoordinaten(Vektor2 position) {
     return new Point((int) (position.x() + getWidth() / 2), (int) (getHeight() / 2 - position.y()));
   }
+  public Vektor2 welt2BildVektor(Vektor2 position)
+  {
+    return new Vektor2((position.x() + getWidth() / 2),(getHeight() / 2 - position.y()));
+  }
 
   /**
    * Rotiert den aktuellen Grafik-Kontext (zum Zeichnen eines rotierten Bildes).
@@ -103,7 +110,21 @@ public class BVCanvas extends Canvas implements Observer {
     double winkelInGrad = bv.getRotationGradImUhrzeigersinn();
     int x = (int) (p.x - bv.getSeitenlaenge() / 2);
     int y = (int) (p.y - bv.getSeitenlaenge() / 2);
+    
+    //Zeichne BV
     zeichneGedrehtesBild(gc, bvImage, winkelInGrad, x, y);
+    
+    //Zeichne Namen
+    gc.setTextAlign(TextAlignment.LEFT);
+    gc.setTextBaseline(VPos.CENTER);
+    gc.setFont(new Font("Comic Sans MS", 15));
+    gc.setFill(Color.BLACK);
+    gc.fillText(bv.getName(), x+bvImage.getWidth(), y+bvImage.getHeight());
+    
+    //Zeichne Verhalten
+    zeichneGedrehtesBild(gc, verhalten,0, x+bvImage.getWidth(), y);
+    
+    
   }
 
   /**
