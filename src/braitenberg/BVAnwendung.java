@@ -37,7 +37,7 @@ public class BVAnwendung extends Application {
     comboBox.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent arg) {
-        if(comboBox.getValue() == "ATTRAKTION") {
+        if (comboBox.getValue() == "ATTRAKTION") {
           vehikel.setBewegung(new BVBewegungAttraktion());
         } else {
           vehikel.setBewegung(new BVBewegungAbstossung());
@@ -45,7 +45,7 @@ public class BVAnwendung extends Application {
       }
     });
   }
-  
+
   @Override
   public void start(Stage primaryStage) {
     // Simulation zusammenstellen
@@ -53,7 +53,7 @@ public class BVAnwendung extends Application {
 
     // Canvas setzen
     BVCanvas canvas = new BVCanvas(600, 600, sim);
-    
+
     canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent mouseEvent) {
@@ -62,7 +62,7 @@ public class BVAnwendung extends Application {
         sim.setSignal(x, y);
       }
     });
-    
+
     canvas.zeichneSimulation();
 
     // Szenengraph aufbauen
@@ -77,14 +77,14 @@ public class BVAnwendung extends Application {
     GridPane simulationsGitter = new GridPane();
     GridPane bewegungsGitter = new GridPane();
     ObservableList<String> listeBewegung = FXCollections.observableArrayList("ATTRAKTION", "ABSTOSSUNG");
-    
-    for(int i = 0; i < sim.getAnzahlVehikel(); i++) {
+
+    for (int i = 0; i < sim.getAnzahlVehikel(); i++) {
       ComboBox<String> bewegungBox = new ComboBox<String>(listeBewegung);
       Label nameVehikel = new Label(sim.getVehikel(i).getName());
       bewegungsGitter.add(nameVehikel, 0, i);
       bewegungsGitter.add(bewegungBox, 1, i);
-      
-      if(sim.getVehikel(i).getBewegung() instanceof BVBewegungAttraktion) {
+
+      if (sim.getVehikel(i).getBewegung() instanceof BVBewegungAttraktion) {
         bewegungBox.setValue("ATTRAKTION");
       } else {
         bewegungBox.setValue("ABSTOSSUNG");
@@ -95,27 +95,23 @@ public class BVAnwendung extends Application {
     simulationsGitter.add(checkbox, 0, 1);
     wurzel.setRight(simulationsGitter);
     wurzel.setLeft(bewegungsGitter);
-    
-    button.setOnAction(new EventHandler<ActionEvent>(){
-      @Override
-      public void handle(ActionEvent event) {
-        System.out.println("Schritt");
-        sim.simulationsSchritt();
+
+    button.setOnAction(event -> {
+      System.out.println("Schritt");
+      sim.simulationsSchritt();
+    });
+
+    checkbox.setOnAction(event -> {
+      if (checkbox.isSelected()) {
+        sim.starteSimThread();
+      } else {
+        sim.beendeSimThread();
       }
     });
-    checkbox.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        if(checkbox.isSelected()) {
-          sim.starteSimThread();
-        } else {
-          sim.beendeSimThread();
-        }
-      }
-    });
-    
+
     primaryStage.setScene(new Scene(wurzel, 850, 600));
     primaryStage.show();
+
   }
 
   /**
