@@ -97,15 +97,17 @@ public class BVAnwendung extends Application {
     wurzel.setLeft(bewegungsGitter);
 
     button.setOnAction(event -> {
-      System.out.println("Schritt");
+      System.out.println("Sim Schritt");
       sim.simulationsSchritt();
     });
 
     checkbox.setOnAction(event -> {
       if (checkbox.isSelected()) {
         sim.starteSimThread();
+        System.out.println("Sim Start");
       } else {
         sim.beendeSimThread();
+        System.out.println("Sim Stop");
       }
     });
 
