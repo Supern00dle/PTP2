@@ -93,7 +93,7 @@ public class Vektor2 {
   
   public static double winkelZwischenZweiVektoren(Vektor2 v1, Vektor2 v2)
   {
-    return (v1.skalarProdukt(v2)) / (v1.getNorm() * v2.getNorm());
+    return Math.acos((v1.skalarProdukt(v2)) / (v1.getNorm() * v2.getNorm()))  * (180/Math.PI) ;
   }
 
   @Override
