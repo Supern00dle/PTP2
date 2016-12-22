@@ -86,6 +86,8 @@ public class BraitenbergVehikel extends Observable{
     double motorBewegungRechts =
         umdrehungenRechts * Math.PI * getRadRadius() * 2.0;
     bewege(motorBewegungLinks, motorBewegungRechts);
+    setChanged();
+    notifyObservers();
   }
 
   /**
@@ -148,6 +150,8 @@ public class BraitenbergVehikel extends Observable{
       orientierung = orientierung.rotiere(winkelBogenmass);
       orientierung.normieren();
     }
+    setChanged();
+    notifyObservers();
   }
 
   /**
@@ -187,10 +191,13 @@ public class BraitenbergVehikel extends Observable{
 
   public void setPosition(Vektor2 position) {
     this.position = position;
+    setChanged();
   }
 
   public void setOrientierung(Vektor2 orientierung) {
     this.orientierung = orientierung;
+    setChanged();
+    notifyObservers();
   }
 
   public double getMaxUmdrehungenProSek() {
@@ -203,6 +210,8 @@ public class BraitenbergVehikel extends Observable{
 
   public void setBewegung(BVBewegung bewegung) {
     this.bewegung = bewegung;
+    setChanged();
+    notifyObservers();
   }
 
   public String getName() {
